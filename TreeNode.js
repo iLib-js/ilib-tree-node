@@ -18,6 +18,9 @@
  * limitations under the License.
  */
 
+function isNode(obj) {
+    return typeof(obj) === "object" && obj instanceof Node;
+}
 
 /**
  * @class Node
@@ -28,10 +31,16 @@ export default class Node {
      * Create a new node instance.
      */
     constructor(obj) {
-        // shallow copy all properties into this node
-        Object.keys(obj).forEach(key => {
-            this[key] = obj[key];
-        });
+        if (obj) {
+            // shallow copy all properties into this node
+            Object.keys(obj).forEach(key => {
+                if (key !== "children") {
+                    this[key] = obj[key];
+                }
+            });
+        } else {
+            this.type = "text";
+        }
     }
 
     /**
@@ -39,6 +48,10 @@ export default class Node {
      * @param {Node} child the child to add
      */
     add(child) {
+        if (!isNode(child)) {
+            return;
+        }
+
         if (typeof(this.children) === 'undefined') {
             this.children = [];
         }
@@ -47,16 +60,35 @@ export default class Node {
 
     /**
      * Flatten the current node and all of its descendents into an
-     * array and return it. When a node has children, it is 
+     * array and return it. When a node has children, it is
      * flattened into two nodes: a start node, followed by nodes for
      * all its children, and an end node. The start and end nodes
      * are marked by a "use" property set to "start" and "end".
-     * 
+     *
      * @returns {Array.<Node>} an array of Nodes flattened from
      * the current node
      */
     toArray() {
-        
+        if (this.children) {
+            var ret = [];
+
+            var clone = new Node(this);
+            clone.use = "start";
+            ret.push(clone);
+
+            for (var i = 0; i < this.children.length; i++) {
+                ret = ret.concat(this.children[i].toArray());
+            }
+
+            clone = new Node(this);
+            clone.use = "end";
+            ret.push(clone);
+            
+            return ret;
+        } else {
+            this.use = undefined;
+            return [this];
+        }
     }
 
     /**
@@ -67,7 +99,7 @@ export default class Node {
      * well-formed, then the shape of the resulting tree will
      * probably not be valid and the results of this static method
      * are not defined.
-     * 
+     *
      * @static
      * @param {Array.<Node>} array the array of Node instances
      * to reconstruct into a tree
@@ -75,5 +107,50 @@ export default class Node {
      * reconstructed from the array of Nodes
      */
     static fromArray(array) {
+        if (!array || !Array.isArray(array) || !array.length) {
+            return undefined;
+        }
+
+        var clone;
+        if (array.length === 1) {
+            if (isNode(array[0])) {
+                clone = new Node(array[0]);
+                clone.use = undefined;
+            }
+            return clone;
+        }
+
+        if (array[0].use !== "start") {
+            // not a real tree
+            return undefined;
+        }
+
+        let root = new Node(array[0]);
+        let stack = [];
+        let current = root;
+        
+        root.use = undefined;
+        stack.push(root);
+
+        for (var i = 1; i < array.length; i++) {
+            if (isNode(array[i])) {
+                if (array[i].use === "start") {
+                    clone = new Node(array[i]);
+                    clone.use = undefined;
+                    stack.push(clone);
+                    current.add(clone);
+                    current = clone;
+                } else if (array[i].use === "end") {
+                    if (stack.length) {
+                        stack.pop();
+                        current = stack[stack.length-1];
+                    }
+                } else {
+                    current.add(array[i]);
+                }
+            }
+        }
+
+        return root;
     }
 }
