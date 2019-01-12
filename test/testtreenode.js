@@ -45,7 +45,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeConstructorCopyAllProperties: function(test) {
-        test.expect(4);
+        test.expect(6);
 
         let node = new Node({
             type: "text",
@@ -79,7 +79,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeAddHasChildren: function(test) {
-        test.expect(4);
+        test.expect(3);
 
         let node = new Node({
             type: "text",
@@ -100,7 +100,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeAddRightNumberOfChildren: function(test) {
-        test.expect(3);
+        test.expect(2);
 
         let parent = new Node({
             type: "parent"
@@ -118,7 +118,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeAddRightNumberOfChildrenMultiple: function(test) {
-        test.expect(4);
+        test.expect(3);
 
         let parent = new Node({
             type: "parent"
@@ -143,7 +143,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeAddRightChildren: function(test) {
-        test.expect(4);
+        test.expect(6);
 
         let parent = new Node({
             type: "parent"
@@ -214,6 +214,54 @@ module.exports.testTreeNode = {
 
         // not a Node instance
         parent.add();
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddNull: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.ok(!parent.children);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not a Node instance
+        parent.add(null);
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddIntrinsic: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.ok(!parent.children);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not a Node instance
+        parent.add(5);
+        parent.add("foo");
+        parent.add(true);
 
         test.equal(parent.children.length, 1);
 
@@ -603,6 +651,35 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+
+    testNodeFromArrayRejectNull: function(test) {
+        test.expect(2);
+
+        let array = [null];
+
+        test.equal(array.length, 1);
+
+        var node = Node.fromArray();
+
+        test.ok(!node);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectIntrinsic: function(test) {
+        test.expect(2);
+
+        let array = [5, "array", true];
+
+        test.equal(array.length, 3);
+
+        var node = Node.fromArray();
+
+        test.ok(!node);
+
+        test.done();
+    },
+
     testNodeFromArrayRejectEmpty: function(test) {
         test.expect(2);
 
@@ -624,7 +701,6 @@ module.exports.testTreeNode = {
             type: "foo",
             value: "bar"
         }];
-
 
         test.equal(array.length, 1);
 

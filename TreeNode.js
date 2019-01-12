@@ -28,10 +28,16 @@ export default class Node {
      * Create a new node instance.
      */
     constructor(obj) {
-        // shallow copy all properties into this node
-        Object.keys(obj).forEach(key => {
-            this[key] = obj[key];
-        });
+        if (obj) {
+            // shallow copy all properties into this node
+            Object.keys(obj).forEach(key => {
+                if (key !== "children") {
+                    this[key] = obj[key];
+                }
+            });
+        } else {
+            this.type = "text";
+        }
     }
 
     /**
@@ -39,6 +45,10 @@ export default class Node {
      * @param {Node} child the child to add
      */
     add(child) {
+        if (typeof(child) !== "object" || !(child instanceof Node)) {
+            return;
+        }
+
         if (typeof(this.children) === 'undefined') {
             this.children = [];
         }
@@ -56,7 +66,24 @@ export default class Node {
      * the current node
      */
     toArray() {
+        if (this.children) {
+            var ret = [];
 
+            var clone = new Node(this);
+            clone.use = "start";
+            ret.push(clone);
+
+            for (var i = 0; i < this.children.length; i++) {
+                ret = ret.concat(this.children[i].toArray());
+            }
+
+            clone = new Node(this);
+            clone.use = "end";
+            ret.push(clone);
+        } else {
+            this.use = undefined;
+            return [this];
+        }
     }
 
     /**
