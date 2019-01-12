@@ -70,7 +70,7 @@ module.exports.testTreeNode = {
             type: "text",
             children: [new Node({type: "a"})]
         });
-        
+
         test.ok(node);
         test.ok(!node.children);
         test.equal(node.type, "text");
@@ -86,14 +86,14 @@ module.exports.testTreeNode = {
             value: "foo"
         });
         test.ok(node);
-        
+
         let parent = new Node({
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(node);
-        
+
         test.ok(parent.children);
 
         test.done();
@@ -106,12 +106,12 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         test.equal(parent.children.length, 1);
 
         test.done();
@@ -124,19 +124,19 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         test.equal(parent.children.length, 1);
 
         parent.add(new Node({
             type: "text",
             value: "bar"
         }));
-        
+
         test.equal(parent.children.length, 2);
 
         test.done();
@@ -149,22 +149,22 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         parent.add(new Node({
             type: "text",
             value: "bar"
         }));
-        
+
         test.equal(parent.children.length, 2);
 
         test.equal(parent.children[0].type, "text");
         test.equal(parent.children[0].value, "foo");
-        
+
         test.equal(parent.children[1].type, "text");
         test.equal(parent.children[1].value, "bar");
 
@@ -178,12 +178,12 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         test.equal(parent.children.length, 1);
 
         // not a Node instance
@@ -191,7 +191,7 @@ module.exports.testTreeNode = {
             type: "text",
             value: "foo"
         });
-        
+
         test.equal(parent.children.length, 1);
 
         test.done();
@@ -204,17 +204,17 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         test.equal(parent.children.length, 1);
 
         // not a Node instance
         parent.add();
-        
+
         test.equal(parent.children.length, 1);
 
         test.done();
@@ -227,21 +227,21 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         parent.add(new Node({
             type: "text",
             value: "bar"
         }));
-        
+
         test.equal(parent.children.length, 2);
 
         let array = parent.toArray();
-        
+
         test.ok(array);
         test.equal(array.length, 4);
 
@@ -255,26 +255,26 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         parent.add(new Node({
             type: "text",
             value: "foo"
         }));
-        
+
         parent.add(new Node({
             type: "text",
             value: "bar"
         }));
-        
+
         test.equal(parent.children.length, 2);
 
         let array = parent.toArray();
-        
+
         test.ok(array);
-        
+
         test.equal(array[0].type, "parent");
         test.equal(array[0].use, "start");
-        
+
         test.equal(array[1].type, "text");
         test.equal(array[1].value, "foo");
 
@@ -294,12 +294,12 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         let array = parent.toArray();
-        
+
         test.ok(array);
         test.equal(array.length, 1);
-        
+
         test.equal(array[0].type, "parent");
         test.equal(array[0].use, "start");
 
@@ -313,37 +313,37 @@ module.exports.testTreeNode = {
             type: "parent"
         });
         test.ok(!parent.children);
-        
+
         let child = new Node({
             type: "text",
             value: "foo"
         });
-        
+
         child.add(new Node({
             type: "text",
             value: "asdf"
         }));
 
         parent.add(child);
-        
+
         child = new Node({
             type: "text",
             value: "bar"
         });
-        
+
         child.add(new Node({
             type: "text",
             value: "blah"
         }));
 
         parent.add(child);
-        
+
         test.equal(parent.children.length, 2);
 
         let array = parent.toArray();
-        
+
         test.ok(array);
-        
+
         test.equal(array.length, 8);
 
         test.done();
@@ -355,40 +355,40 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        
+
         let child = new Node({
             type: "text",
             value: "foo"
         });
-        
+
         child.add(new Node({
             type: "text",
             value: "asdf"
         }));
 
         parent.add(child);
-        
+
         child = new Node({
             type: "text",
             value: "bar"
         });
-        
+
         child.add(new Node({
             type: "text",
             value: "blah"
         }));
 
         parent.add(child);
-        
+
         test.equal(parent.children.length, 2);
 
         let array = parent.toArray();
-        
+
         test.ok(array);
-        
+
         test.equal(array[0].type, "parent");
         test.equal(array[0].use, "start");
-        
+
         test.equal(array[1].type, "text");
         test.equal(array[1].value, "foo");
         test.equal(array[1].use, "start");
@@ -415,6 +415,204 @@ module.exports.testTreeNode = {
 
         test.equal(array[7].type, "parent");
         test.equal(array[7].use, "end");
+
+        test.done();
+    },
+
+    testNodeFromArrayRightNumberOfChildren: function(test) {
+        test.expect(3);
+
+        let array = [];
+        array.push(new Node({
+            type: "parent",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "foo"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "bar"
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+
+        let node = Node.fromArray(array);
+
+        test.ok(node);
+        test.ok(node.children);
+        test.equal(node.children.length, 2);
+
+        test.done();
+    },
+
+    testNodeFromArrayRightChildren: function(test) {
+        test.expect(24);
+
+        let array = [];
+        array.push(new Node({
+            type: "parent",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "foo"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "bar"
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+
+        let node = Node.fromArray(array);
+
+        test.ok(node);
+        test.ok(node.children);
+
+        test.equal(parent.children[0].type, "text");
+        test.equal(parent.children[0].value, "foo");
+
+        test.equal(parent.children[1].type, "text");
+        test.equal(parent.children[1].value, "bar");
+
+        test.done();
+    },
+
+    testNodeFromArrayMultiLevelRightContents: function(test) {
+        test.expect(26);
+
+        let array = [];
+        array.push(new Node({
+            type: "parent",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "foo",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "asdf"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "foo",
+            use: "end"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "bar",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "blah"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "bar",
+            use: "end"
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+
+        test.equal(array.length, 8);
+
+        var node = Node.fromArray(array);
+
+        test.ok(node);
+        test.ok(node.children);
+        test.equal(node.children.length, 2);
+
+        test.equal(node.type, "parent");
+        test.ok(!node.use);
+        test.ok(node.children);
+        test.equal(node.children.length, 1);
+
+        let child = node.children[0];
+
+        test.equal(child.type, "text");
+        test.equal(child.value, "foo");
+        test.ok(child.children);
+        test.equal(child.children.length, 1);
+        test.ok(!child.use);
+
+        let grandchild = child.children[0];
+
+        test.equal(grandchild.type, "text");
+        test.equal(grandchild.value, "asdf");
+        test.ok(!grandchild.children);
+        test.ok(!grandchild.use);
+
+        let child = node.children[1];
+
+        test.equal(child.type, "text");
+        test.equal(child.value, "bar");
+        test.ok(child.children);
+        test.equal(child.children.length, 1);
+        test.ok(!child.use);
+
+        let grandchild = child.children[0];
+
+        test.equal(grandchild.type, "text");
+        test.equal(grandchild.value, "blah");
+        test.ok(!grandchild.children);
+        test.ok(!grandchild.use);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectUndefined: function(test) {
+        test.expect(25);
+
+        let array = [];
+
+        test.equal(array.length, 0);
+
+        var node = Node.fromArray();
+
+        test.ok(!node);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectEmpty: function(test) {
+        test.expect(25);
+
+        let array = [];
+
+        test.equal(array.length, 0);
+
+        var node = Node.fromArray(array);
+
+        test.ok(!node);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectNonNodes: function(test) {
+        test.expect(25);
+
+        let array = [{
+            type: "foo",
+            value: "bar"
+        }];
+
+
+        test.equal(array.length, 1);
+
+        var node = Node.fromArray(array);
+
+        test.ok(!node);
 
         test.done();
     },

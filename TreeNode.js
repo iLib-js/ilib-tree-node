@@ -47,16 +47,16 @@ export default class Node {
 
     /**
      * Flatten the current node and all of its descendents into an
-     * array and return it. When a node has children, it is 
+     * array and return it. When a node has children, it is
      * flattened into two nodes: a start node, followed by nodes for
      * all its children, and an end node. The start and end nodes
      * are marked by a "use" property set to "start" and "end".
-     * 
+     *
      * @returns {Array.<Node>} an array of Nodes flattened from
      * the current node
      */
     toArray() {
-        
+
     }
 
     /**
@@ -67,7 +67,7 @@ export default class Node {
      * well-formed, then the shape of the resulting tree will
      * probably not be valid and the results of this static method
      * are not defined.
-     * 
+     *
      * @static
      * @param {Array.<Node>} array the array of Node instances
      * to reconstruct into a tree
