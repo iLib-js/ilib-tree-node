@@ -18,6 +18,9 @@
  * limitations under the License.
  */
 
+function isNode(obj) {
+    return typeof(obj) === "object" && obj instanceof Node;
+}
 
 /**
  * @class Node
@@ -45,7 +48,7 @@ export default class Node {
      * @param {Node} child the child to add
      */
     add(child) {
-        if (typeof(child) !== "object" || !(child instanceof Node)) {
+        if (!isNode(child)) {
             return;
         }
 
@@ -80,6 +83,8 @@ export default class Node {
             clone = new Node(this);
             clone.use = "end";
             ret.push(clone);
+            
+            return ret;
         } else {
             this.use = undefined;
             return [this];
@@ -102,5 +107,50 @@ export default class Node {
      * reconstructed from the array of Nodes
      */
     static fromArray(array) {
+        if (!array || !Array.isArray(array) || !array.length) {
+            return undefined;
+        }
+
+        var clone;
+        if (array.length === 1) {
+            if (isNode(array[0])) {
+                clone = new Node(array[0]);
+                clone.use = undefined;
+            }
+            return clone;
+        }
+
+        if (array[0].use !== "start") {
+            // not a real tree
+            return undefined;
+        }
+
+        let root = new Node(array[0]);
+        let stack = [];
+        let current = root;
+        
+        root.use = undefined;
+        stack.push(root);
+
+        for (var i = 1; i < array.length; i++) {
+            if (isNode(array[i])) {
+                if (array[i].use === "start") {
+                    clone = new Node(array[i]);
+                    clone.use = undefined;
+                    stack.push(clone);
+                    current.add(clone);
+                    current = clone;
+                } else if (array[i].use === "end") {
+                    if (stack.length) {
+                        stack.pop();
+                        current = stack[stack.length-1];
+                    }
+                } else {
+                    current.add(array[i]);
+                }
+            }
+        }
+
+        return root;
     }
 }

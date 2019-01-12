@@ -349,7 +349,7 @@ module.exports.testTreeNode = {
         test.equal(array.length, 1);
 
         test.equal(array[0].type, "parent");
-        test.equal(array[0].use, "start");
+        test.ok(!array[0].use);
 
         test.done();
     },
@@ -498,7 +498,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeFromArrayRightChildren: function(test) {
-        test.expect(24);
+        test.expect(6);
 
         let array = [];
         array.push(new Node({
@@ -523,17 +523,17 @@ module.exports.testTreeNode = {
         test.ok(node);
         test.ok(node.children);
 
-        test.equal(parent.children[0].type, "text");
-        test.equal(parent.children[0].value, "foo");
+        test.equal(node.children[0].type, "text");
+        test.equal(node.children[0].value, "foo");
 
-        test.equal(parent.children[1].type, "text");
-        test.equal(parent.children[1].value, "bar");
+        test.equal(node.children[1].type, "text");
+        test.equal(node.children[1].value, "bar");
 
         test.done();
     },
 
     testNodeFromArrayMultiLevelRightContents: function(test) {
-        test.expect(26);
+        test.expect(24);
 
         let array = [];
         array.push(new Node({
@@ -580,11 +580,8 @@ module.exports.testTreeNode = {
         test.ok(node);
         test.ok(node.children);
         test.equal(node.children.length, 2);
-
         test.equal(node.type, "parent");
         test.ok(!node.use);
-        test.ok(node.children);
-        test.equal(node.children.length, 1);
 
         let child = node.children[0];
 
@@ -638,11 +635,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeFromArrayRejectUndefined: function(test) {
-        test.expect(2);
-
-        let array = [];
-
-        test.equal(array.length, 0);
+        test.expect(1);
 
         var node = Node.fromArray();
 
@@ -651,8 +644,17 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeFromArrayRejectNullArray: function(test) {
+        test.expect(1);
 
-    testNodeFromArrayRejectNull: function(test) {
+        var node = Node.fromArray(null);
+
+        test.ok(!node);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectNullValue: function(test) {
         test.expect(2);
 
         let array = [null];
@@ -666,7 +668,17 @@ module.exports.testTreeNode = {
         test.done();
     },
 
-    testNodeFromArrayRejectIntrinsic: function(test) {
+    testNodeFromArrayRejectIntrinsicArray: function(test) {
+        test.expect(1);
+
+        var node = Node.fromArray(5);
+
+        test.ok(!node);
+
+        test.done();
+    },
+
+    testNodeFromArrayRejectIntrinsicValues: function(test) {
         test.expect(2);
 
         let array = [5, "array", true];
