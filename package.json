@@ -1,0 +1,61 @@
+{
+    "name": "tree-node",
+    "version": "1.0.0",
+    "main": "./tree-node-es5.js",
+    "main-es6": "./tree-node.js",
+    "description": "A package to build, construct, and deconstruct an arbitrary tree of nodes.",
+    "keywords": [
+        "tree",
+        "node"
+    ],
+    "homepage": "https://github.com/iLib-js/ilib-tree-node",
+    "bugs": "https://github.com/iLib-js/ilib-tree-node",
+    "email": "marketing@translationcircle.com",
+    "license": "Apache-2.0",
+    "author": {
+        "name": "Edwin Hoogerbeets",
+        "web": "http://www.translationcircle.com/",
+        "email": "edwin@translationcircle.com"
+    },
+    "contributors": [
+        {
+            "name": "Edwin Hoogerbeets",
+            "email": "ehoogerbeets@gmail.com"
+        }
+    ],
+    "files": [
+        "TreeNode.js",
+        "TreeNode-es5.js",
+        "TreeNode-es5.js.map",
+        "README.md",
+        "LICENSE"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:iLib-js/ilib-tree-node.git"
+    },
+    "scripts": {
+        "build": "grunt babel",
+        "dist": "npm run build ; npm pack",
+        "test": "npm run build ; node test/testSuite.js",
+        "debug": "npm run build ; node --inspect-brk test/testSuite.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "acorn": "^6.0.2",
+        "acorn-jsx": "^5.0.0",
+        "babel-core": "^6.26.0",
+        "babel-preset-env": "*",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
+        "grunt": "^1.0.3",
+        "grunt-contrib-clean": "^2.0.0",
+        "grunt-contrib-jshint": "^2.0.0",
+        "grunt-contrib-nodeunit": "^2.0.0",
+        "grunt-contrib-uglify": "^4.0.0",
+        "grunt-babel": "^7.0.0",
+        "load-grunt-tasks": "^4.0.0",
+        "promise": "8.0.1",
+        "nodeunit": "0.11.0"
+    }
+}
