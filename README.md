@@ -1,6 +1,6 @@
-# Tree Builder
+# iLib Tree Node
 
-Simple class to buils, construct, and deconstruct an arbitrary tree
+Simple class to build, construct, and deconstruct an arbitrary tree
 structure.
 
 A node in the tree may have an arbitrary number of children. Each node
@@ -67,10 +67,10 @@ does not have children will get added to the array as-is.
 
 ### Reconstructing the Tree from an Array of Nodes
 
-To reconstruct a tree from an array of nodes, use the following:
+To reconstruct a tree from an array of nodes, use the following static method:
 
 ```
-node.fromArray(array) - reconstruct the tree from an array of nodes
+Node.fromArray(array) - reconstruct the tree from an array of nodes
 ```
 
 This method will use the "use" property to rebuild a tree of varying depths.
