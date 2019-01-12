@@ -553,7 +553,7 @@ module.exports.testTreeNode = {
         test.ok(!grandchild.children);
         test.ok(!grandchild.use);
 
-        let child = node.children[1];
+        child = node.children[1];
 
         test.equal(child.type, "text");
         test.equal(child.value, "bar");
@@ -561,7 +561,7 @@ module.exports.testTreeNode = {
         test.equal(child.children.length, 1);
         test.ok(!child.use);
 
-        let grandchild = child.children[0];
+        grandchild = child.children[0];
 
         test.equal(grandchild.type, "text");
         test.equal(grandchild.value, "blah");
@@ -571,8 +571,26 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeFromArrayDegenerate: function(test) {
+        test.expect(4);
+
+        let array = [new Node({
+            type: "parent"
+        })];
+
+        test.equal(array.length, 1);
+
+        var node = Node.fromArray(array);
+
+        test.ok(node);
+        test.ok(!node.children);
+        test.equal(node.type, "parent");
+
+        test.done();
+    },
+
     testNodeFromArrayRejectUndefined: function(test) {
-        test.expect(25);
+        test.expect(2);
 
         let array = [];
 
@@ -586,7 +604,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeFromArrayRejectEmpty: function(test) {
-        test.expect(25);
+        test.expect(2);
 
         let array = [];
 
@@ -600,7 +618,7 @@ module.exports.testTreeNode = {
     },
 
     testNodeFromArrayRejectNonNodes: function(test) {
-        test.expect(25);
+        test.expect(2);
 
         let array = [{
             type: "foo",
