@@ -34,7 +34,7 @@ export default class Node {
         if (obj) {
             // shallow copy all properties into this node
             Object.keys(obj).forEach(key => {
-                if (key !== "children") {
+                if (key !== "children" && typeof(obj[key]) !== 'undefined') {
                     this[key] = obj[key];
                 }
             });

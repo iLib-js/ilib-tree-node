@@ -63,6 +63,40 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeConstructorDontCopyUndefinedProperties: function(test) {
+        test.expect(5);
+
+        let node = new Node({
+            type: "text",
+            value: "foo",
+            index: undefined
+        });
+        test.ok(node);
+        test.ok(!node.children);
+        test.equal(node.type, "text");
+        test.equal(node.value, "foo");
+        test.equal(typeof(node.index), 'undefined');
+
+        test.done();
+    },
+
+    testNodeConstructorDontCopyNullProperties: function(test) {
+        test.expect(5);
+
+        let node = new Node({
+            type: "text",
+            value: "foo",
+            isRoot: null
+        });
+        test.ok(node);
+        test.ok(!node.children);
+        test.equal(node.type, "text");
+        test.equal(node.value, "foo");
+        test.equal(node.isRoot, null);
+
+        test.done();
+    },
+
     testNodeConstructorRejectChildren: function(test) {
         test.expect(3);
 
