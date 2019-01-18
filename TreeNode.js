@@ -34,13 +34,14 @@ export default class Node {
         if (obj) {
             // shallow copy all properties into this node
             Object.keys(obj).forEach(key => {
-                if (key !== "children") {
+                if (key !== "children" && typeof(obj[key]) !== 'undefined') {
                     this[key] = obj[key];
                 }
             });
         } else {
             this.type = "text";
         }
+        this.children = [];
     }
 
     /**
@@ -52,9 +53,6 @@ export default class Node {
             return;
         }
 
-        if (typeof(this.children) === 'undefined') {
-            this.children = [];
-        }
         this.children.push(child);
     }
 
@@ -69,7 +67,7 @@ export default class Node {
      * the current node
      */
     toArray() {
-        if (this.children) {
+        if (this.children.length) {
             var ret = [];
 
             var clone = new Node(this);
