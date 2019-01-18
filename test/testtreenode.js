@@ -26,7 +26,7 @@ module.exports.testTreeNode = {
         // default type
         let node = new Node();
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
 
         test.done();
     },
@@ -39,7 +39,7 @@ module.exports.testTreeNode = {
         test.ok(node);
         test.equal(node.type, "text");
         test.ok(!node.value);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
 
         test.done();
     },
@@ -54,7 +54,7 @@ module.exports.testTreeNode = {
             isRoot: false
         });
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
         test.equal(node.type, "text");
         test.equal(node.value, "foo");
         test.equal(node.index, 5);
@@ -72,7 +72,7 @@ module.exports.testTreeNode = {
             index: undefined
         });
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
         test.equal(node.type, "text");
         test.equal(node.value, "foo");
         test.equal(typeof(node.index), 'undefined');
@@ -89,7 +89,7 @@ module.exports.testTreeNode = {
             isRoot: null
         });
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
         test.equal(node.type, "text");
         test.equal(node.value, "foo");
         test.equal(node.isRoot, null);
@@ -106,7 +106,7 @@ module.exports.testTreeNode = {
         });
 
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
         test.equal(node.type, "text");
 
         test.done();
@@ -124,7 +124,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(node);
 
@@ -139,7 +139,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -157,7 +157,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -182,7 +182,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -211,7 +211,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -237,7 +237,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -260,7 +260,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -283,7 +283,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -308,7 +308,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -336,7 +336,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         parent.add(new Node({
             type: "text",
@@ -375,7 +375,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         let array = parent.toArray();
 
@@ -394,7 +394,7 @@ module.exports.testTreeNode = {
         let parent = new Node({
             type: "parent"
         });
-        test.ok(!parent.children);
+        test.equal(parent.children.length, 0);
 
         let child = new Node({
             type: "text",
@@ -629,7 +629,7 @@ module.exports.testTreeNode = {
 
         test.equal(grandchild.type, "text");
         test.equal(grandchild.value, "asdf");
-        test.ok(!grandchild.children);
+        test.equal(grandchild.children.length, 0);
         test.ok(!grandchild.use);
 
         child = node.children[1];
@@ -644,7 +644,7 @@ module.exports.testTreeNode = {
 
         test.equal(grandchild.type, "text");
         test.equal(grandchild.value, "blah");
-        test.ok(!grandchild.children);
+        test.equal(grandchild.children.length, 0);
         test.ok(!grandchild.use);
 
         test.done();
@@ -662,7 +662,7 @@ module.exports.testTreeNode = {
         var node = Node.fromArray(array);
 
         test.ok(node);
-        test.ok(!node.children);
+        test.equal(node.children.length, 0);
         test.equal(node.type, "parent");
 
         test.done();

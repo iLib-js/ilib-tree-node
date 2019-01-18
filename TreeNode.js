@@ -41,6 +41,7 @@ export default class Node {
         } else {
             this.type = "text";
         }
+        this.children = [];
     }
 
     /**
@@ -52,9 +53,6 @@ export default class Node {
             return;
         }
 
-        if (typeof(this.children) === 'undefined') {
-            this.children = [];
-        }
         this.children.push(child);
     }
 
@@ -69,7 +67,7 @@ export default class Node {
      * the current node
      */
     toArray() {
-        if (this.children) {
+        if (this.children.length) {
             var ret = [];
 
             var clone = new Node(this);
