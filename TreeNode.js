@@ -81,11 +81,16 @@ export default class Node {
             clone = new Node(this);
             clone.use = "end";
             ret.push(clone);
-            
+
             return ret;
-        } else {
+        } else if (this.type === "text") {
             this.use = undefined;
             return [this];
+        } else {
+            // self closing component
+            var clone = new Node(this);
+            clone.use = "startend";
+            return [clone];
         }
     }
 
@@ -126,7 +131,7 @@ export default class Node {
         let root = new Node(array[0]);
         let stack = [];
         let current = root;
-        
+
         root.use = undefined;
         stack.push(root);
 

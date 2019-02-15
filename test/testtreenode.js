@@ -369,6 +369,38 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeToArrayEmptyComponents: function(test) {
+        test.expect(10);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.add(new Node({
+            type: "component",
+            extra: {name: "A"}
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        let array = parent.toArray();
+
+        test.ok(array);
+
+        test.equal(array[0].type, "parent");
+        test.equal(array[0].use, "start");
+
+        test.equal(array[1].type, "component");
+        test.deepEqual(array[1].extra, {name: "A"});
+        test.equal(array[1].use, "startend");
+
+        test.equal(array[2].type, "parent");
+        test.equal(array[2].use, "end");
+
+        test.done();
+    },
+
     testNodeToArrayDegenerate: function(test) {
         test.expect(5);
 
@@ -383,7 +415,7 @@ module.exports.testTreeNode = {
         test.equal(array.length, 1);
 
         test.equal(array[0].type, "parent");
-        test.ok(!array[0].use);
+        test.equal(array[0].use, "startend");
 
         test.done();
     },
@@ -650,6 +682,37 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeFromArraySelfClosing: function(test) {
+        test.expect(6);
+
+        let array = [];
+        array.push(new Node({
+            type: "parent",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "component",
+            extra: {name: "A"},
+            use: "startend"
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+
+        let node = Node.fromArray(array);
+
+        test.ok(node);
+        test.ok(node.children);
+        test.equal(node.children.length, 1);
+
+        test.ok(node.children[0]);
+        test.ok(node.children[0].children);
+        test.equal(node.children[0].children.length, 0);
+
+        test.done();
+    },
+
     testNodeFromArrayDegenerate: function(test) {
         test.expect(4);
 
@@ -755,6 +818,5 @@ module.exports.testTreeNode = {
         test.ok(!node);
 
         test.done();
-    },
-
+    }
 };
