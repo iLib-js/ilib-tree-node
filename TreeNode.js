@@ -114,6 +114,10 @@ export default class Node {
             return undefined;
         }
 
+        if (!array.every(node => typeof node === "object")) {
+            return undefined;
+        }
+
         var clone;
         if (array.length === 1) {
             if (isNode(array[0])) {
@@ -123,19 +127,23 @@ export default class Node {
             return clone;
         }
 
-        if (array[0].use !== "start") {
-            // not a real tree
-            return undefined;
+        let rootExtra, startIndex = 0;
+        if (array[0].use === "start") {
+            rootExtra = array[0];
+            startIndex = 1;
+        } else {
+            rootExtra = {type: "root"};
+            startIndex = 0;
         }
-
-        let root = new Node(array[0]);
+        // not a tree? Make a wrapper node!
+        let root = new Node(rootExtra);
         let stack = [];
         let current = root;
 
         root.use = undefined;
         stack.push(root);
 
-        for (var i = 1; i < array.length; i++) {
+        for (var i = startIndex; i < array.length; i++) {
             if (isNode(array[i])) {
                 if (array[i].use === "start") {
                     clone = new Node(array[i]);
