@@ -758,7 +758,7 @@ module.exports.testTreeNode = {
 
         test.equal(array.length, 1);
 
-        var node = Node.fromArray();
+        var node = Node.fromArray(array);
 
         test.ok(!node);
 
@@ -782,7 +782,7 @@ module.exports.testTreeNode = {
 
         test.equal(array.length, 3);
 
-        var node = Node.fromArray();
+        var node = Node.fromArray(array);
 
         test.ok(!node);
 
@@ -818,5 +818,61 @@ module.exports.testTreeNode = {
         test.ok(!node);
 
         test.done();
-    }
+    },
+
+    testNodeFromArrayNonTree: function(test) {
+        test.expect(14);
+
+        let array = [];
+        array.push(new Node({
+            type: "text",
+            value: "foobar"
+        }));
+        array.push(new Node({
+            type: "component",
+            use: "start",
+            extra: {
+                name: "X"
+            }
+        }));
+        array.push(new Node({
+            type: "component",
+            extra: {name: "A"},
+            use: "startend"
+        }));
+        array.push(new Node({
+            type: "component",
+            use: "end"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "asdf asdf"
+        }));
+
+        let node = Node.fromArray(array);
+
+        // should get an automatic root node and the
+        // nodes above should be its children
+        test.ok(node);
+
+        test.equal(node.type, "root");
+        test.ok(node.children);
+        test.equal(node.children.length, 3);
+
+        test.ok(node.children[0]);
+        test.equal(node.children[0].type, "text");
+        test.equal(node.children[0].value, "foobar");
+
+        test.ok(node.children[1]);
+        test.equal(node.children[1].type, "component");
+        test.deepEqual(node.children[1].extra, {name: "X"});
+        test.equal(node.children[1].children.length, 1);
+
+        test.ok(node.children[2]);
+        test.equal(node.children[2].type, "text");
+        test.equal(node.children[2].value, "asdf asdf");
+
+        test.done();
+    },
+
 };
