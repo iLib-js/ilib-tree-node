@@ -875,4 +875,56 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeFromArrayNotWellFormed: function(test) {
+        test.expect(12);
+
+        let array = [];
+        array.push(new Node({
+            type: "text",
+            value: "asdf",
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "start"
+        }));
+        array.push(new Node({
+            type: "text",
+            value: "bar",
+        }));
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+        // this one is an end without a start:
+        array.push(new Node({
+            type: "parent",
+            use: "end"
+        }));
+        // this one should not cause an exception
+        array.push(new Node({
+            type: "text",
+            value: "foo",
+        }));
+
+        let node = Node.fromArray(array);
+
+        test.ok(node);
+
+        test.equal(node.type, "root");
+        test.ok(node.children);
+        test.equal(node.children.length, 3);
+
+        test.ok(node.children[0]);
+        test.equal(node.children[0].type, "text");
+        test.equal(node.children[0].value, "asdf");
+
+        test.ok(node.children[1]);
+        test.equal(node.children[1].type, "parent");
+
+        test.ok(node.children[2]);
+        test.equal(node.children[2].type, "text");
+        test.equal(node.children[2].value, "foo");
+
+        test.done();
+    }
 };
