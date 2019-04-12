@@ -152,7 +152,7 @@ export default class Node {
                     current.add(clone);
                     current = clone;
                 } else if (array[i].use === "end") {
-                    if (stack.length) {
+                    if (stack.length > 1) {
                         stack.pop();
                         current = stack[stack.length-1];
                     }
