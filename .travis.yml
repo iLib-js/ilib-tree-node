@@ -10,7 +10,8 @@ install:
   - npm install
   - export PATH=$PWD/node_modules/.bin:$PATH
 script:
-  - npm run clean test
+  - npm run clean
+  - npm run test
 branches:
   only:
     - master
