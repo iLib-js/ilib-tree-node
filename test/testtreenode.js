@@ -1,7 +1,7 @@
 /*
  * testtreenode.js - test the TreeNode object
  *
- * Copyright © 2019, JEDLSoft
+ * Copyright © 2019, 2021 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -205,6 +205,114 @@ module.exports.testTreeNode = {
         test.done();
     },
 
+    testNodeAddRightNumberOfChildrenArray: function(test) {
+        test.expect(2);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.addChildren([
+            new Node({
+                type: "text",
+                value: "foo"
+            }),
+            new Node({
+                type: "text",
+                value: "bar"
+            })
+        ]);
+
+        test.equal(parent.children.length, 2);
+
+        test.done();
+    },
+
+    testNodeAddArrayRightChildren: function(test) {
+        test.expect(6);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.addChildren([
+            new Node({
+                type: "text",
+                value: "foo"
+            }),
+            new Node({
+                type: "text",
+                value: "bar"
+            })
+        ]);
+
+        test.equal(parent.children.length, 2);
+
+        test.equal(parent.children[0].type, "text");
+        test.equal(parent.children[0].value, "foo");
+
+        test.equal(parent.children[1].type, "text");
+        test.equal(parent.children[1].value, "bar");
+
+        test.done();
+    },
+
+    testNodeAddArraysMultiple: function(test) {
+        test.expect(12);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.addChildren([
+            new Node({
+                type: "text",
+                value: "foo"
+            }),
+            new Node({
+                type: "text",
+                value: "bar"
+            })
+        ]);
+
+        parent.addChildren([
+            new Node({
+                type: "text",
+                value: "asdf"
+            }),
+            new Node({
+                type: "text",
+                value: "rach"
+            }),
+            new Node({
+                type: "text",
+                value: "blort"
+            })
+        ]);
+
+        test.equal(parent.children.length, 5);
+
+        test.equal(parent.children[0].type, "text");
+        test.equal(parent.children[0].value, "foo");
+
+        test.equal(parent.children[1].type, "text");
+        test.equal(parent.children[1].value, "bar");
+
+        test.equal(parent.children[2].type, "text");
+        test.equal(parent.children[2].value, "asdf");
+
+        test.equal(parent.children[3].type, "text");
+        test.equal(parent.children[3].value, "rach");
+
+        test.equal(parent.children[4].type, "text");
+        test.equal(parent.children[4].value, "blort");
+
+        test.done();
+    },
+
     testNodeAddRejectNonNode: function(test) {
         test.expect(3);
 
@@ -227,6 +335,49 @@ module.exports.testTreeNode = {
         });
 
         test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddArrayNonArray: function(test) {
+        test.expect(2);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        // should not add nodes that are not in an array
+        parent.addChildren(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 0);
+
+        test.done();
+    },
+
+    testNodeAddArrayRejectNonNodes: function(test) {
+        test.expect(2);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.addChildren([
+            new Node({
+                type: "text",
+                value: "foo"
+            }),
+            {
+                type: "text",
+                value: "bar"
+            }
+        ]);
+
+        test.equal(parent.children.length, 0);
 
         test.done();
     },
@@ -296,6 +447,100 @@ module.exports.testTreeNode = {
         parent.add(5);
         parent.add("foo");
         parent.add(true);
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddChildrenEmpty: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not an array of Node instances
+        parent.addChildren([]);
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddChildrenUndefined: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not an array of Node instances
+        parent.addChildren([undefined, undefined]);
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddChildrenNull: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not an array of Node instances
+        parent.addChildren([null, null]);
+
+        test.equal(parent.children.length, 1);
+
+        test.done();
+    },
+
+    testNodeAddIntrinsic: function(test) {
+        test.expect(3);
+
+        let parent = new Node({
+            type: "parent"
+        });
+        test.equal(parent.children.length, 0);
+
+        parent.add(new Node({
+            type: "text",
+            value: "foo"
+        }));
+
+        test.equal(parent.children.length, 1);
+
+        // not an array of Node instances
+        parent.addChildren([5]);
+        parent.addChildren(["foo"]);
+        parent.addChildren([true]);
 
         test.equal(parent.children.length, 1);
 

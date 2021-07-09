@@ -56,6 +56,13 @@ export default class Node {
         this.children.push(child);
     }
 
+    addChildren(array) {
+        if (!Array.isArray(array) || !array.every(element => (element instanceof Node))) {
+            return;
+        }
+        array.forEach(element => this.add(element));
+    }
+
     /**
      * Flatten the current node and all of its descendents into an
      * array and return it. When a node has children, it is

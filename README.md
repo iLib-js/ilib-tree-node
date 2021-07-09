@@ -100,3 +100,10 @@ let ast = X; // some unist tree, probably from a parser
 let treeNode = map(ast, node => new Node(node));
 ```
 
+# Release Notes
+
+## v1.3.0
+
+- implement the ability to add an array of nodes to the children at the
+same time with the new `addChildren` method
+
