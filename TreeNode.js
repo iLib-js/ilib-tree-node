@@ -2,7 +2,7 @@
  * TreeNode.js - build, construct, and deconstruct a tree
  *
  * @license
- * Copyright © 2019, JEDLSoft
+ * Copyright © 2019, 2021 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,6 +54,13 @@ export default class Node {
         }
 
         this.children.push(child);
+    }
+
+    addChildren(array) {
+        if (!Array.isArray(array) || !array.every(element => (element instanceof Node))) {
+            return;
+        }
+        array.forEach(element => this.add(element));
     }
 
     /**
