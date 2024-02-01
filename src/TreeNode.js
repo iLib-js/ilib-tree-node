@@ -2,7 +2,7 @@
  * TreeNode.js - build, construct, and deconstruct a tree
  *
  * @license
- * Copyright © 2019, 2021 JEDLSoft
+ * Copyright © 2019, 2021, 2024 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ function isNode(obj) {
  * @class Node
  * @param {Object} an object to make into a tree node
  */
-export default class Node {
+class Node {
     /**
      * Create a new node instance.
      */
@@ -75,13 +75,13 @@ export default class Node {
      */
     toArray() {
         if (this.children.length) {
-            var ret = [];
+            let ret = [];
 
-            var clone = new Node(this);
+            let clone = new Node(this);
             clone.use = "start";
             ret.push(clone);
 
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 ret = ret.concat(this.children[i].toArray());
             }
 
@@ -95,7 +95,7 @@ export default class Node {
             return [this];
         } else {
             // self closing component
-            var clone = new Node(this);
+            let clone = new Node(this);
             clone.use = "startend";
             return [clone];
         }
@@ -125,7 +125,7 @@ export default class Node {
             return undefined;
         }
 
-        var clone;
+        let clone;
         if (array.length === 1) {
             if (isNode(array[0])) {
                 clone = new Node(array[0]);
@@ -150,7 +150,7 @@ export default class Node {
         root.use = undefined;
         stack.push(root);
 
-        for (var i = startIndex; i < array.length; i++) {
+        for (let i = startIndex; i < array.length; i++) {
             if (isNode(array[i])) {
                 if (array[i].use === "start") {
                     clone = new Node(array[i]);
@@ -172,3 +172,5 @@ export default class Node {
         return root;
     }
 }
+
+export default Node;
