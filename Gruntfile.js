@@ -21,32 +21,18 @@
 module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
-    var debug = grunt.option('mode') === 'dev';
-
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         babel: {
             options: {
                 sourceMap: true,
-                presets: [[
-                    '@babel/preset-env',
-                    {
-                        targets: {
-                            node: "10",
-                            browsers: "cover 99.5%"
-                        }
-                    }
-                ]],
-                plugins: [
-                    "add-module-exports"
-                ],
-                minified: !debug,
-                comments: false
+                presets: ['@babel/preset-env'],
+                minified: true
             },
             dist: {
                 files: [{
-                    'lib/TreeNode.js': 'src/TreeNode.js'
+                    'TreeNode-es5.js': 'TreeNode.js'
                 }]
             }
         },
@@ -54,6 +40,9 @@ module.exports = function(grunt) {
             dist: ['lib']
         }
     });
+
+    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Default task(s).
     grunt.registerTask('default', ['babel']);
