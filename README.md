@@ -102,6 +102,14 @@ let treeNode = map(ast, node => new Node(node));
 
 # Release Notes
 
+## v1.3.2
+
+- same as v1.3.0
+
+## v1.3.1
+
+- version is deprecated
+
 ## v1.3.0
 
 - implement the ability to add an array of nodes to the children at the
