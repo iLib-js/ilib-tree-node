@@ -4,7 +4,7 @@ jobs:
     parameters:
         docker_image:
           type: string
-          default: cimg/node:current-browsers
+          default: circleci/node:current-browsers
     docker:
       - image: << parameters.docker_image >>
     steps:
@@ -26,15 +26,13 @@ workflows:
   test-all-node-versions:
     jobs:
       - test:
-          docker_image: circleci/node:10
+          docker_image: circleci/node:8-browsers
       - test:
-          docker_image: circleci/node:12
+          docker_image: circleci/node:10-browsers
       - test:
-          docker_image: cimg/node:14.21
+          docker_image: circleci/node:12-browsers
       - test:
-          docker_image: cimg/node:16.20
+          docker_image: circleci/node:13-browsers
       - test:
-          docker_image: cimg/node:18.9
-      - test:
-          docker_image: cimg/node:20.9
+          docker_image: circleci/node:14-browsers
       - test
